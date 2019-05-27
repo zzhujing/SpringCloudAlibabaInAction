@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: alibaba-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.152.131:8848
+    gateway:
+      routes:
+        - id: ALIBABA-PROVIDER
+          uri: lb://alibaba-provider
+          predicates:
+            - Method=GET,POST
+        - id: ALIBABA-CONSUMER
+          uri: lb://alibaba-consumer
+          predicates:
+            - Method=GET,POST
+      discovery:
+        locator:
+          enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+# \u914D\u7F6E\u65E5\u5FD7\u7EA7\u522B\uFF0C\u65B9\u522B\u8C03\u8BD5
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
+server:
+  port: 9000
